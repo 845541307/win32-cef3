@@ -141,8 +141,15 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
     {
 	case WM_CREATE:
 		{
-			std::wstring url(L"D:\\study\\books\\JavaScript\\JavaScript_node\\myTest.html");
-			//std::wstring url(L"http://www.baidu.com");
+			std::wstring url(L"");
+			TCHAR szPath[MAX_PATH] = { 0 };
+			GetCurrentDirectory(MAX_PATH, szPath);
+			std::wstring path(szPath);
+			int index = path.rfind(L"\\");
+			if (index != std::wstring::npos)
+			{
+				url = path.substr(0, index) + L"\\Html\\myTest.html";
+			}
 			g_browserHelper.CreateBrowserAndUI(hWnd, url);
 		}
 		break;
